@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Acervo{% endblock %}
+{% block conteudo %}
+<h2>Acervo de livros</h2>
+
+<form method="get" class="pesquisa">
+    <input type="text" name="nome" value="{{ nome }}" placeholder="Pesquisar por nome/título">
+    <select name="tipo">
+        <option value="">Todos os tipos</option>
+        {% for valor, texto in tipos %}
+        <option value="{{ valor }}" {% if tipo == valor %}selected{% endif %}>{{ texto }}</option>
+        {% endfor %}
+    </select>
+    <select name="categoria">
+        <option value="">Todas as categorias</option>
+        {% for valor, texto in categorias %}
+        <option value="{{ valor }}" {% if categoria == valor %}selected{% endif %}>{{ texto }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit">Pesquisar</button>
+    <a class="limpar" href="{% url 'lista' %}">Limpar</a>
+</form>
+
+{% if livros %}
+<div class="cards">
+{% for livro in livros %}
+<article>
+    <h3>{{ livro.titulo }}</h3>
+    <p><strong>Autor:</strong> {{ livro.autor }}</p>
+    <p><strong>Ano:</strong> {{ livro.ano }}</p>
+    <p><strong>Acervo:</strong> {{ livro.get_tipo_acervo_display }}</p>
+    <p><strong>Categoria:</strong> {{ livro.get_categoria_display }}</p>
+    <p><strong>Status:</strong> {% if livro.disponivel %}Disponível{% else %}Indisponível{% endif %}</p>
+</article>
+{% endfor %}
+</div>
+{% else %}
+<p>Nenhum livro encontrado.</p>
+{% endif %}
+{% endblock %}

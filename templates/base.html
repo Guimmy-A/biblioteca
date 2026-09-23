@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Biblioteca{% endblock %}</title>
+    <link rel="stylesheet" href="/static/acervo/estilo.css">
+</head>
+<body>
+<header>
+    <h1>Biblioteca</h1>
+    <nav>
+        <a href="{% url 'lista' %}">Acervo</a>
+        <a href="{% url 'novo' %}">Cadastrar livro</a>
+        <a href="/admin/">Admin</a>
+    </nav>
+</header>
+<main>
+    {% block conteudo %}{% endblock %}
+</main>
+<footer>Projeto Full Stack — Aulas 04 e 05</footer>
+</body>
+</html>
