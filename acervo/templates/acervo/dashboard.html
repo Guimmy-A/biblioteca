@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Dashboard{% endblock %}
+{% block conteudo %}
+<h2>Dashboard do acervo</h2>
+
+<form method="get" class="pesquisa">
+    <label>{{ form.inicio.label }} {{ form.inicio }}</label>
+    <label>{{ form.fim.label }} {{ form.fim }}</label>
+    <button type="submit">Filtrar</button>
+    <a class="limpar" href="{% url 'dashboard' %}">Limpar</a>
+    <a class="limpar" href="{% url 'exportar_csv' %}{% if querystring %}?{{ querystring }}{% endif %}">Exportar CSV</a>
+</form>
+
+{% if form.errors %}
+<div class="erros">
+    {% for campo in form %}{% for erro in campo.errors %}<p>{{ campo.label }}: {{ erro }}</p>{% endfor %}{% endfor %}
+    {% for erro in form.non_field_errors %}<p>{{ erro }}</p>{% endfor %}
+    <p>O filtro de período não foi aplicado.</p>
+</div>
+{% endif %}
+
+<div class="kpis">
+    <div class="kpi"><small>Livros</small><strong>{{ kpis.total }}</strong></div>
+    <div class="kpi"><small>Disponíveis</small><strong>{{ kpis.disponiveis }}</strong></div>
+    <div class="kpi"><small>Digitais</small><strong>{{ kpis.digitais }}</strong></div>
+    <div class="kpi"><small>Físicos</small><strong>{{ kpis.fisicos }}</strong></div>
+</div>
+
+<div class="paineis">
+    <section class="painel">
+        <h3>Livros cadastrados por mês</h3>
+        {% if por_mes %}
+        {{ por_mes|json_script:"dados-mes" }}
+        <div class="grafico"><canvas id="grafico-mes"></canvas></div>
+        {% else %}
+        <p>Sem dados no período.</p>
+        {% endif %}
+    </section>
+
+    <section class="painel">
+        <h3>Autores com mais livros</h3>
+        <table>
+            {% for item in ranking %}
+            <tr>
+                <td>{{ item.autor }}</td>
+                <td class="num">{{ item.total }}</td>
+            </tr>
+            {% empty %}
+            <tr><td>Sem dados no período.</td></tr>
+            {% endfor %}
+        </table>
+    </section>
+
+    <section class="painel largo">
+        <h3>Acervo por categoria</h3>
+        {% if distribuicao %}
+        {{ distribuicao|json_script:"dados-categoria" }}
+        <div class="grafico"><canvas id="grafico-categoria"></canvas></div>
+        {% else %}
+        <p>Sem dados no período.</p>
+        {% endif %}
+    </section>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.js"></script>
+<script src="{% static 'acervo/dashboard.js' %}"></script>
+{% endblock %}

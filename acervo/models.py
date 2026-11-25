@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 class Livro(models.Model):
     TIPOS_ACERVO = [
@@ -25,6 +26,13 @@ class Livro(models.Model):
     disponivel = models.BooleanField(default=True)
     tipo_acervo = models.CharField(max_length=10, choices=TIPOS_ACERVO)
     categoria = models.CharField(max_length=3, choices=CATEGORIAS)
+    # Data de cadastro: base do filtro por período e da série por mês do dashboard.
+    criado_em = models.DateTimeField(default=timezone.now, editable=False)
+
+    class Meta:
+        indexes = [
+            models.Index(fields=["criado_em"], name="livro_criado_em_idx"),
+        ]
 
     def __str__(self):
         return self.titulo

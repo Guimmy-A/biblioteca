@@ -12,3 +12,20 @@ article { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2p
 .formulario { background: white; padding: 20px; border-radius: 8px; }
 .formulario input, .formulario select { width: 100%; box-sizing: border-box; }
 footer { text-align: center; padding: 30px; }
+
+/* Dashboard */
+.pesquisa label { display: flex; align-items: center; gap: 6px; }
+.erros { background: #fdecea; border: 1px solid #f5c6cb; color: #8a1f17; padding: 10px 15px; border-radius: 6px; margin-bottom: 20px; }
+.erros p { margin: 4px 0; }
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 15px; margin-bottom: 25px; }
+.kpi { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px #ddd; }
+.kpi small { display: block; color: #666; margin-bottom: 6px; }
+.kpi strong { font-size: 2rem; }
+.paineis { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 15px; }
+.painel { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px #ddd; }
+.painel.largo { grid-column: 1 / -1; }
+.painel h3 { margin-top: 0; }
+.grafico { position: relative; height: 280px; }
+.painel table { width: 100%; border-collapse: collapse; }
+.painel td { padding: 8px 4px; border-bottom: 1px solid #eee; }
+.painel td.num { text-align: right; font-weight: bold; }
